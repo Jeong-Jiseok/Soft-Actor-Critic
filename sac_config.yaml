@@ -1,0 +1,35 @@
+# ================= Experiment Settings =================
+env: Humanoid-v5                            # Gymnasium environment name
+seed: 0
+total_steps: 10000000
+start_steps: 5000                         # Random actions before policy starts training
+updates_per_step: 1                       # Agent updates per environment step
+eval_interval: 1000
+eval_episodes: 5
+save_interval: 10000                      # Checkpoint saving interval (in steps)
+
+# ================= Logging & Saving ====================
+log_dir: runs/SAC                         # Directory for TensorBoard logs
+model_save_dir: checkpoints/SAC           # Directory for saving model checkpoints
+
+# ================= Replay Buffer =======================
+capacity: 1000000
+
+# ================= SAC Agent ===========================
+sac:
+  batch_size: 256                         # Mini-batch size for training
+  lr: 0.0003
+  gamma: 0.99
+  tau: 0.005                              # Soft update coefficient for target network
+  alpha: 0.2                              # Initial entropy temperature
+  automatic_entropy_tuning: True          # Enable entropy coefficient auto-tuning
+  target_entropy: -2
+  target_update_interval: 1
+
+  # Actor/Critic network settings
+  hidden_dim: 256
+  num_layers: 2
+
+  # Log standard deviation bounds for actor (stability trick)
+  LOG_STD_MAX: 2
+  LOG_STD_MIN: -20
